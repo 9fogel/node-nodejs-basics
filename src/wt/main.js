@@ -13,7 +13,7 @@ const createWorker = (i) => {
       resolve({ status: 'resolved', data: value });
     });
     worker.on("error", () => {
-      reject({ status: 'error', data: null });
+      resolve({ status: 'error', data: null });
     });
   })
 }
