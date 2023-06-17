@@ -1,5 +1,5 @@
 import { Transform } from 'stream';
-import { stdin } from 'process';
+import { stdin, stdout } from 'process';
 
 const transform = async () => {
   const transformStream = new Transform({
@@ -7,7 +7,7 @@ const transform = async () => {
       callback(null, chunk.toString().split('').reverse().join(''));
     }
   })
-  stdin.pipe(transformStream).pipe(process.stdout);
+  stdin.pipe(transformStream).pipe(stdout);
 };
 
 await transform();
