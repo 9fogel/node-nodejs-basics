@@ -1,17 +1,14 @@
-import { mkdir, readdir, copyFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import path from 'path';
+import { getDirname } from '../utils/dirnameHelper.js';
+import { mkdir, readdir, copyFile } from 'fs/promises';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const newDirPath = path.join(__dirname, 'files_copy');
-const filesFolderPath = path.join(__dirname, 'files');
+const newDirPath = path.join(getDirname(import.meta.url), 'files_copy');
+const filesFolderPath = path.join(getDirname(import.meta.url), 'files');
 
 const copy = async () => {
   try {
-    await mkdir(newDirPath);
     const files = await readdir(filesFolderPath);
+    await mkdir(newDirPath);
     for (let file of files) {
       await copyFile(path.join(filesFolderPath, file), path.join(newDirPath, file));
     }
