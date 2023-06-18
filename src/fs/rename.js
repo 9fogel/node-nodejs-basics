@@ -1,17 +1,26 @@
-import { access, rename as renameFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import path from 'path';
+import { getDirname } from '../utils/dirnameHelper.js';
+import { access, rename as renameFile } from 'fs/promises';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const oldPath = path.join(__dirname, 'files', 'wrongFilename.txt');
-const newPath = path.join(__dirname, 'files', 'properFilename.md');
+const oldPath = path.join(getDirname(import.meta.url), 'files', 'wrongFilename.txt');
+const newPath = path.join(getDirname(import.meta.url), 'files', 'properFilename.md');
+
+const doesFileExist = async(path) => {
+  try {
+    await access(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 const rename = async () => {
   try {
-    //TODO: properFilename.md already exists - error must be thrown
-    await renameFile(oldPath, newPath);
+    if (await doesFileExist(oldPath) && await doesFileExist(newPath)) {
+      throw new Error('FS operation failed');
+    } else {
+      await renameFile(oldPath, newPath);
+    }
   } catch {
     throw new Error('FS operation failed');
   }
