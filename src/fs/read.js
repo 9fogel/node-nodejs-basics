@@ -1,11 +1,8 @@
-import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import path from 'path';
+import { getDirname } from '../utils/dirnameHelper.js';
+import { readFile } from 'fs/promises';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const filePath = path.join(__dirname, 'files', 'fileToRead.txt');
+const filePath = path.join(getDirname(import.meta.url), 'files', 'fileToRead.txt');
 
 const read = async () => {
   try {
