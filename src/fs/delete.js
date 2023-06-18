@@ -1,11 +1,8 @@
-import { rm } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import path from 'path';
+import { getDirname } from '../utils/dirnameHelper.js';
+import { rm } from 'fs/promises';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const filePath = path.join(__dirname, 'files', 'fileToRemove.txt');
+const filePath = path.join(getDirname(import.meta.url), 'files', 'fileToRemove.txt');
 
 const remove = async () => {
   try {
