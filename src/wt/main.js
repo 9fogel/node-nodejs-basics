@@ -23,7 +23,7 @@ const performCalculations = async () => {
 
   for (let i = 0; i < cpuCoresNumber; i++) {
     workerPromises.push(createWorker(i));
-    }
+  }
 
   const resultsList = await Promise.all(workerPromises);
 
