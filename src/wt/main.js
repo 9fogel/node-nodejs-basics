@@ -7,7 +7,7 @@ const cpuCoresNumber = os.cpus().length;
 const workerFilePath = path.join(getDirname(import.meta.url), 'worker.js');
 
 const createWorker = (i) => {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve) {
     const worker = new Worker(workerFilePath, { workerData: i + 10 });
     worker.on("message", (value) => {
       resolve({ status: 'resolved', data: value });
